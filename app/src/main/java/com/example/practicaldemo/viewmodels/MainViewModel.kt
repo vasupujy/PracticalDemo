@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import com.example.practicaldemo.repository.BlogRepository
+import com.example.practicaldemo.rest.response.Item
 
 
 class MainViewModel : ViewModel{
@@ -14,7 +15,7 @@ class MainViewModel : ViewModel{
         movieRepository= BlogRepository()
 
     }
-    fun getAllBlog(): LiveData<List<Object>> {
+    fun getAllBlog(): LiveData<List<Item>> {
         return movieRepository!!.getMutableLiveData()
     }
 

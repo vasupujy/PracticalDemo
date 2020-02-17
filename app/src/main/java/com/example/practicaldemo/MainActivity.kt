@@ -10,6 +10,8 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.lifecycle.Observer
+import com.example.practicaldemo.rest.response.Item
 
 /*
  *18 February 2020 2:20 PM
@@ -27,7 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel=ViewModelProvider.AndroidViewModelFactory.getInstance(application)
             .create(MainViewModel::class.java)
-        viewModel.getAllBlog()
+        viewModel.getAllBlog().observe(this, Observer {
+           var list=it
+            print(list)
+        })
 
     }
 }

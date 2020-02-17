@@ -4,6 +4,8 @@ import androidx.databinding.adapters.NumberPickerBindingAdapter.setValue
 import androidx.lifecycle.MutableLiveData
 import com.example.practicaldemo.rest.ApiInterface
 import com.example.practicaldemo.rest.RestClient
+import com.example.practicaldemo.rest.response.Item
+import com.example.practicaldemo.rest.response.MainResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,23 +13,20 @@ import retrofit2.Response
 
 class BlogRepository {
     private val movies = ArrayList<Object>()
-    private val mutableLiveData = MutableLiveData<List<Object>>()
+    private val mutableLiveData = MutableLiveData<List<Item>>()
 
-    fun getMutableLiveData(): MutableLiveData<List<Object>> {
+    fun getMutableLiveData(): MutableLiveData<List<Item>> {
         val apiService = RestClient.getService()
         val call = apiService.callGetData("desc","activity","stackoverflow")
-        call.enqueue(object : Callback<Object> {
-            override fun onResponse(call: Call<Object>, response: Response<Object>) {
-                val mBlogWrapper = response.body()
-//                if (mBlogWrapper != null && mBlogWrapper!!.getBlog() != null) {
-//                    movies = mBlogWrapper!!.getBlog() as ArrayList<Blog>
-//                    mutableLiveData.setValue(movies)
-//                }
+        call.enqueue(object : Callback<MainResponse>{
+            override fun onFailure(call: Call<MainResponse>, t: Throwable) {
             }
 
-            override fun onFailure(call: Call<Object>, t: Throwable) {
-                print(t.message)
+            override fun onResponse(call: Call<MainResponse>, response: Response<MainResponse>) {
+                var mainResponse=response.body() as MainResponse
+                mutableLiveData.value= mainResponse.items
             }
+
         })
         return mutableLiveData
     }

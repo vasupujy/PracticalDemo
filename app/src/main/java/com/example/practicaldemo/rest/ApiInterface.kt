@@ -1,5 +1,6 @@
 package com.example.practicaldemo.rest
 
+import com.example.practicaldemo.rest.response.MainResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -12,6 +13,8 @@ interface ApiInterface {
         @Query("order") header: String, @Query("sort") path: String, @Query(
             "site"
         ) page: String
-    ): Call<Object>
+    ): Call<MainResponse>
+
+
 
 }

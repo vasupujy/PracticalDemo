@@ -4,7 +4,6 @@ import androidx.databinding.adapters.NumberPickerBindingAdapter.setValue
 import androidx.lifecycle.MutableLiveData
 import com.example.practicaldemo.rest.ApiInterface
 import com.example.practicaldemo.rest.RestClient
-import com.example.practicaldemo.rest.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

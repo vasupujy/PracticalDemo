@@ -1,17 +1,16 @@
 package com.example.practicaldemo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import com.example.practicaldemo.databinding.ActivityMainBinding
-import com.example.practicaldemo.viewmodels.MainViewModel
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
+import com.example.practicaldemo.databinding.ActivityMainBinding
+import com.example.practicaldemo.db.AppDatabase
+import com.example.practicaldemo.db.Task
 import com.example.practicaldemo.rest.response.Item
+import com.example.practicaldemo.viewmodels.MainViewModel
 
 /*
  *18 February 2020 2:20 PM
@@ -25,14 +24,28 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        viewModel=ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
             .create(MainViewModel::class.java)
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).allowMainThreadQueries()
+            .build()
         viewModel.getAllBlog().observe(this, Observer {
-           var list=it
+            var list = it
+            val productionList=ArrayList<Item>()
+            val  productList=Task()
+            productList.first_name="asasd"
+            productionList.addAll(it)
+            productList.optionValues=productionList
+            db.taskDao().insert(productList)
+            db.taskDao().all
             print(list)
         })
+
+
 
     }
 }
